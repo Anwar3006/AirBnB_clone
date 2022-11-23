@@ -22,7 +22,7 @@ class BaseModel:
                     v = datetime.strptime(v, "%Y-%m-%dT%H:%M:%S.%f")
                 if k != "__class__":
                     setattr(self, k, v)
-        
+
         models.storage.new(self)
 
     def __str__(self):

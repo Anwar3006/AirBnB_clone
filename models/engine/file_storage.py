@@ -1,7 +1,11 @@
 #!/usr/bin/python3
-"""Defines a file storage class."""
+"""File Storage Module
+This module is in charge of the storage of the
+classes and their management."""
 import json
 from models.base_model import BaseModel
+import os
+
 
 
 class FileStorage():
@@ -27,16 +31,21 @@ class FileStorage():
         """Serializes __objects to the JSON file """
 
         dictionary = {}
-        for key, values in self.__objects.items():
+        for key in self.__objects.items():
             dictionary[key] = self.__objects[key].to_dict()
         with open(self.__file_path, "w", encoding="utf-8") as f:
-            f.write(json.dumps(dictionary))
+            serial = json.dumps(dictionary)
+            f.write(serial)
 
     def reload(self):
-        """Deserializes the JSON file to __objects"""
-
-        try:
-            with open(self.__file_path, "r", encoding="utf-8")as f:
-                json.loads(f)
-        except FileNotFoundError:
-            pass
+        """Deserializes the JSON file in `__file_path` class attribute
+        If the file on `__file_path` class attribute exists, each object
+        on the file will be deserialized and appended to the `__objects`
+        class attribute like an instance with the object data.
+        """
+        if os.path.exists(self.__file_path):
+            with open(self.__file_path, mode='r', encoding='utf-8') as f:
+                for o in json.load(f).values():
+                    name = o["__class__"]
+                    del o["__class__"]
+                    self.new(eval(name)(**o))

@@ -2,13 +2,12 @@
 """Defines a"""
 import cmd
 from models.base_model import BaseModel
-from models.engine.file_storage import FileStorage
-import sys
 
 class HBNBCommand(cmd.Cmd):
     """" """
     prompt = "(hbnb) "
     doc_header = "Documented commands (type help <topic>):"
+    Classes = ['BaseModel']
 
     def do_EOF(self, args):
         """Exit from the command prompt"""
@@ -21,33 +20,32 @@ class HBNBCommand(cmd.Cmd):
     def do_create(self, args):
         """Creates a new instance of BaseModel, saves it (to the JSON file) 
         and prints the id"""
-        New_arg = args.split(' ')
+        command = self.parseline(args)[0]
 
-        if len(New_arg) == 1:
-            if New_arg[0] == "BaseModel":
-                Instance = BaseModel()
-                Instance.save()
-                print (Instance.id)
-            else:
-                print ("** class doesn't exist **")
-        else:
+        if command is None:
             print ("** class name missing **")
+        elif command not in self.Classes:
+            print ("** class doesn't exist **")
+        else:
+            new_inst = eval(command)()
+            print (new_inst.id)
 
-    def do_show(self, args):
-        """Prints the string representation of an instance based
-        on the class name and id"""
-        if len(args) < 3:
-            print ("** instance id missing **")
-            if args[3] != BaseModel.id:
-                print ("** no instance found **")
-        elif len(args) < 2:
-            print ("** class name missing **")
-        else:
-            if args[2] == "BaseModel" and args[3] == BaseModel.id:
-                show = BaseModel.__str__()
-                print (show)
-            else:
-                print ("** class doesn't exist **")
+
+    # def do_show(self, args):
+    #     """Prints the string representation of an instance based
+    #     on the class name and id"""
+    #     if len(args) < 3:
+    #         print ("** instance id missing **")
+    #         if args[3] != BaseModel.id:
+    #             print ("** no instance found **")
+    #     elif len(args) < 2:
+    #         print ("** class name missing **")
+    #     else:
+    #         if args[2] == "BaseModel" and args[3] == BaseModel.id:
+    #             show = BaseModel.__str__()
+    #             print (show)
+    #         else:
+    #             print ("** class doesn't exist **")
             
 
 
