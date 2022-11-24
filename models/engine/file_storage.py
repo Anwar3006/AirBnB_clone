@@ -22,7 +22,7 @@ class FileStorage:
         __file_path (str): path to the JSON file (ex: file.json)
         __object (dictionary): store all objects by <class name>.id eg BaseModel.12121212"""
 
-    __file_path = "file1.json"
+    __file_path = "file.json"
     __objects = {}
 
     def all(self):
