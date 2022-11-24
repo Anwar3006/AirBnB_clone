@@ -2,13 +2,19 @@
 """File Storage Module
 This module is in charge of the storage of the
 classes and their management."""
+
 import json
+from models.amenity import Amenity
 from models.base_model import BaseModel
-import os
+from models.city import City
+from models.place import Place
+from models.review import Review
+from models.state import State
+from models.user import User
+from os import path
 
 
-
-class FileStorage():
+class FileStorage:
     """Represents a class that serializes instances to a JSON file
     and deserializes JSON file to instances
     
@@ -31,11 +37,10 @@ class FileStorage():
         """Serializes __objects to the JSON file """
 
         dictionary = {}
-        for key in self.__objects.items():
+        for key in self.__objects:
             dictionary[key] = self.__objects[key].to_dict()
         with open(self.__file_path, "w", encoding="utf-8") as f:
-            serial = json.dumps(dictionary)
-            f.write(serial)
+            json.dump(dictionary, f)
 
     def reload(self):
         """Deserializes the JSON file in `__file_path` class attribute
@@ -43,7 +48,7 @@ class FileStorage():
         on the file will be deserialized and appended to the `__objects`
         class attribute like an instance with the object data.
         """
-        if os.path.exists(self.__file_path):
+        if path.exists(self.__file_path):
             with open(self.__file_path, mode='r', encoding='utf-8') as f:
                 for o in json.load(f).values():
                     name = o["__class__"]

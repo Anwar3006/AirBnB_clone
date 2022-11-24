@@ -23,7 +23,6 @@ class BaseModel:
                 if k != "__class__":
                     setattr(self, k, v)
 
-        models.storage.new(self)
 
     def __str__(self):
         """Returns the string representation of keys/values"""
@@ -37,6 +36,7 @@ class BaseModel:
         with the current datetime"""
 
         self.updated_at = datetime.utcnow()
+        models.storage.new(self)
         models.storage.save()
 
     def to_dict(self):
