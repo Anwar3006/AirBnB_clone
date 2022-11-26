@@ -4,6 +4,7 @@ import uuid
 from datetime import datetime
 import models
 
+
 class BaseModel:
     """Represents all common attributes/methods for other classes"""
 
@@ -22,7 +23,6 @@ class BaseModel:
                     v = datetime.strptime(v, "%Y-%m-%dT%H:%M:%S.%f")
                 if k != "__class__":
                     setattr(self, k, v)
-
 
     def __str__(self):
         """Returns the string representation of keys/values"""

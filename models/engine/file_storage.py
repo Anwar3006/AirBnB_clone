@@ -17,10 +17,11 @@ from os import path
 class FileStorage:
     """Represents a class that serializes instances to a JSON file
     and deserializes JSON file to instances
-    
+
     Args:
         __file_path (str): path to the JSON file (ex: file.json)
-        __object (dictionary): store all objects by <class name>.id eg BaseModel.12121212"""
+        __object (dictionary): store all objects by <class name>.id
+        eg BaseModel.12121212"""
 
     __file_path = "file.json"
     __objects = {}

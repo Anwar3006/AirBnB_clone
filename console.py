@@ -21,7 +21,7 @@ class HBNBCommand(cmd.Cmd):
     prompt = "(hbnb) "
     doc_header = "Documented commands (type help <topic>):"
     Classes = ['BaseModel', 'User', 'State', 'City',
-                       'Amenity', 'Place', 'Review']
+               'Amenity', 'Place', 'Review']
 
     def do_EOF(self, line):
         """Exit from the command prompt"""
@@ -32,19 +32,18 @@ class HBNBCommand(cmd.Cmd):
         return True
 
     def do_create(self, line):
-        """Creates a new instance of BaseModel, saves it (to the JSON file) 
+        """Creates a new instance of BaseModel, saves it (to the JSON file)
         and prints the id"""
         command = self.parseline(line)[0]
 
         if command is None:
-            print ("** class name missing **")
+            print("** class name missing **")
         elif command not in self.Classes:
-            print ("** class doesn't exist **")
+            print("** class doesn't exist **")
         else:
             new_inst = eval(command)()
-            print (new_inst.id)
+            print(new_inst.id)
             new_inst.save()
-
 
     def do_show(self, line):
         """Prints the string representation of an instance based
@@ -54,15 +53,15 @@ class HBNBCommand(cmd.Cmd):
         classid = self.parseline(line)[1]
 
         if classname is None:
-            print ("** class name missing **")
+            print("** class name missing **")
         elif classname not in self.Classes:
-            print ("** class doesn't exist **")
+            print("** class doesn't exist **")
         elif classid == '':
-            print ("** instance id missing **")
+            print("** instance id missing **")
         else:
             data = models.storage.all().get(classname + '.' + classid)
             if data is None:
-                print ("** no instance found **")
+                print("** no instance found **")
             print(data)
 
     def do_destroy(self, line):
@@ -71,16 +70,16 @@ class HBNBCommand(cmd.Cmd):
         classid = self.parseline(line)[1]
 
         if classname is None:
-            print ("** class name missing **")
+            print("** class name missing **")
         elif classname not in self.Classes:
-            print ("** class doesn't exist **")
+            print("** class doesn't exist **")
         elif classid == '':
-            print ("** instance id missing **")
+            print("** instance id missing **")
         else:
             key = classname + '.' + classid
             data = models.storage.all().get(key)
             if data is None:
-                print ("** no instance found **")
+                print("** no instance found **")
             else:
                 del models.storage.all()[key]
                 models.storage.save()
@@ -95,7 +94,8 @@ class HBNBCommand(cmd.Cmd):
             print([str(objs[obj]) for obj in objs])
         elif classname in self.Classes:
             keys = objs.keys()
-            print([str(objs[key]) for key in keys if key.startswith(classname)])
+            print([str(objs[key])
+                   for key in keys if key.startswith(classname)])
         else:
             print("** class doesn't exist **")
 
@@ -163,7 +163,7 @@ class HBNBCommand(cmd.Cmd):
                     if key.startswith(instance)]
 
         return [str(val) for key, val in objects.items()]
-    
+
     def default(self, line):
         """
         When the command prefix is not recognized, this method
@@ -193,6 +193,7 @@ class HBNBCommand(cmd.Cmd):
         """When an empty line is entered in response to the prompt,
             it won't repeat the last nonempty command entered."""
         pass
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
