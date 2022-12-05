@@ -1,0 +1,13 @@
+/* Header style for 3-index.html */
+header {
+    background-color: #FFFFFF;
+    height: 70px;
+    width: 100%;
+    border-bottom: 1px solid #CCCCCC;
+}
+
+.logo {
+    background: url("../images/logo.png") no-repeat;
+    height: 100%;
+    left: 20px;
+}
